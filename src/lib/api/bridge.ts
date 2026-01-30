@@ -17,6 +17,26 @@ export interface Sale {
     id_documento: number;
     fecha: string; // ISO date string
     id_cliente: number;
+    cliente_name: string;
+    id_producto: number;
+    naturaleza_concepto: number;
+    fecha_vencimiento: string;
+    saldo_pendiente: number;
+    cantidad: number;
+    precio_unitario: number;
+    subtotal: number;
+    iva: number;
+    total: number;
+    costo_linea: number;
+    costo_unitario: number;
+}
+
+export interface Cobranza {
+    id_movimiento: number;
+    id_documento: number;
+    fecha: string;
+    id_cliente: number;
+    cliente_name: string;
     id_producto: number;
     naturaleza_concepto: number;
     fecha_vencimiento: string;
@@ -47,5 +67,23 @@ export const bridgeApi = {
 
     getSalesByMonth: async (year: string, month: string) => {
         return bridgeApi.getSales({ year, month });
+    },
+
+    getCobranza: async (params?: { startDate?: string; endDate?: string; year?: string; month?: string }) => {
+        try {
+            const response = await api.get<Cobranza[]>('/cobranza', { params });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching cobranza:', error);
+            throw error;
+        }
+    },
+
+    getCobranzaByYear: async (year: string) => {
+        return bridgeApi.getCobranza({ year });
+    },
+
+    getCobranzaByMonth: async (year: string, month: string) => {
+        return bridgeApi.getCobranza({ year, month });
     },
 };
