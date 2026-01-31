@@ -65,7 +65,9 @@ export function SalesChart({ data, title = "Ventas", description = "Ventas diari
                             }}
                         />
                         <YAxis
-                            tickFormatter={(value) => `$${value}`}
+                            tickFormatter={(value) => 
+                              `$${value.toLocaleString("es-MX")}`
+                            }
                             axisLine={false}
                             tickLine={false}
                         />

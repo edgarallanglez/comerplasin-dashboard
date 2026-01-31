@@ -33,11 +33,15 @@ function renderTableBody<TData, TValue>({
   columns,
   dndEnabled,
   dataIds,
+  highlightedRowId,
+  onRowClick,
 }: {
   table: TanStackTable<TData>;
   columns: ColumnDef<TData, TValue>[];
   dndEnabled: boolean;
   dataIds: UniqueIdentifier[];
+  highlightedRowId: string | null;
+  onRowClick: (rowId: string) => void;
 }) {
   if (!table.getRowModel().rows.length) {
     return (
@@ -58,7 +62,12 @@ function renderTableBody<TData, TValue>({
     );
   }
   return table.getRowModel().rows.map((row) => (
-    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+    <TableRow
+      key={row.id}
+      data-state={row.getIsSelected() ? "selected" : highlightedRowId === row.id ? "highlighted" : undefined}
+      onClick={() => onRowClick(row.id)}
+      className="cursor-pointer"
+    >
       {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
       ))}
@@ -72,9 +81,14 @@ export function DataTable<TData, TValue>({
   dndEnabled = false,
   onReorder,
 }: DataTableProps<TData, TValue>) {
+  const [highlightedRowId, setHighlightedRowId] = React.useState<string | null>(null);
   const dataIds: UniqueIdentifier[] = table.getRowModel().rows.map((row) => Number(row.id) as UniqueIdentifier);
   const sortableId = React.useId();
   const sensors = useSensors(useSensor(MouseSensor, {}), useSensor(TouchSensor, {}), useSensor(KeyboardSensor, {}));
+
+  const handleRowClick = (rowId: string) => {
+    setHighlightedRowId((prev) => (prev === rowId ? null : rowId));
+  };
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -104,7 +118,7 @@ export function DataTable<TData, TValue>({
         ))}
       </TableHeader>
       <TableBody className="**:data-[slot=table-cell]:first:w-8">
-        {renderTableBody({ table, columns, dndEnabled, dataIds })}
+        {renderTableBody({ table, columns, dndEnabled, dataIds, highlightedRowId, onRowClick: handleRowClick })}
       </TableBody>
     </Table>
   );

@@ -64,7 +64,9 @@ export function CobranzaChart({ data, title = "Cobranza", description = "Saldo p
                             }}
                         />
                         <YAxis
-                            tickFormatter={(value) => `$${value}`}
+                            tickFormatter={(value) => 
+                              `$${value.toLocaleString("es-MX")}`
+                            }
                             axisLine={false}
                             tickLine={false}
                         />
