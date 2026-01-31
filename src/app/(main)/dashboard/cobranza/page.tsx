@@ -36,7 +36,7 @@ export default async function CobranzaPage({ searchParams }: PageProps) {
             <CobranzaStats data={data} />
             <CobranzaChart data={data} />
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 min-w-0">
                 <h2 className="text-xl font-semibold">Cuentas por Cobrar</h2>
                 <CobranzaTable data={data} />
             </div>

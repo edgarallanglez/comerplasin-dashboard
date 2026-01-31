@@ -37,7 +37,7 @@ export default async function SalesPage({ searchParams }: PageProps) {
             <SalesStats data={data} />
             <SalesChart data={data} />
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 min-w-0">
                 <h2 className="text-xl font-semibold">Transacciones Recientes</h2>
                 <SalesTable data={data} />
             </div>
