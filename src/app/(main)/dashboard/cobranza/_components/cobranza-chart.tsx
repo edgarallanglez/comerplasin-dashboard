@@ -10,7 +10,7 @@ import type { Cobranza } from "@/lib/api/bridge";
 const chartConfig = {
     pendiente: {
         label: "Saldo Pendiente",
-        color: "hsl(var(--destructive))",
+        color: "#a1a1aa",
     },
 } satisfies ChartConfig;
 
@@ -64,8 +64,8 @@ export function CobranzaChart({ data, title = "Cobranza", description = "Saldo p
                             }}
                         />
                         <YAxis
-                            tickFormatter={(value) => 
-                              `$${value.toLocaleString("es-MX")}`
+                            tickFormatter={(value) =>
+                                `$${value.toLocaleString("es-MX")}`
                             }
                             axisLine={false}
                             tickLine={false}

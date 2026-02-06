@@ -16,10 +16,17 @@ export default async function CobranzaPage({ searchParams }: PageProps) {
     const currentYear = new Date().getFullYear().toString();
     const year = typeof params.year === 'string' ? params.year : currentYear;
     const month = typeof params.month === 'string' ? params.month : undefined;
+    const startDate = typeof params.startDate === 'string' ? params.startDate : undefined;
+    const endDate = typeof params.endDate === 'string' ? params.endDate : undefined;
 
     let data: import("@/lib/api/bridge").Cobranza[] = [];
     try {
-        data = await bridgeApi.getCobranza({ year, month });
+        data = await bridgeApi.getCobranza({
+            year: startDate && endDate ? undefined : year,
+            month: startDate && endDate ? undefined : month,
+            startDate,
+            endDate
+        });
     } catch (error) {
         console.error("Failed to fetch cobranza data", error);
     }

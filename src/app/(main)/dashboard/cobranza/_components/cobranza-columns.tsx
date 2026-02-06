@@ -35,7 +35,7 @@ export const cobranzaColumns: ColumnDef<Cobranza>[] = [
       const vencimiento = new Date(row.original.fecha_vencimiento);
       const today = new Date();
       const isOverdue = vencimiento < today;
-      
+
       return (
         <div className={`w-28 ${isOverdue ? "text-destructive font-medium" : ""}`}>
           {vencimiento.toLocaleDateString("es-MX", { timeZone: "UTC" })}
@@ -47,26 +47,26 @@ export const cobranzaColumns: ColumnDef<Cobranza>[] = [
   {
     accessorKey: "cliente_name",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Cliente" />,
-    cell: ({ row }) => <TruncatedCell value={row.original.cliente_name} maxWidth="200px" />,
-    size: 200,
+    cell: ({ row }) => <TruncatedCell value={row.original.cliente_name} maxWidth="400px" />,
+    size: 400,
     filterFn: "includesString",
   },
-  {
-    accessorKey: "id_producto",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Producto" />,
-    cell: ({ row }) => <TruncatedCell value={row.original.id_producto} maxWidth="250px" />,
-    size: 250,
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Total" className="justify-end" />,
-    cell: ({ row }) => (
-      <div className="text-right">
-        ${row.original.total.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-      </div>
-    ),
-    size: 120,
-  },
+  // {
+  //   accessorKey: "id_producto",
+  //   header: ({ column }) => <DataTableColumnHeader column={column} title="Producto" />,
+  //   cell: ({ row }) => <TruncatedCell value={row.original.id_producto} maxWidth="250px" />,
+  //   size: 250,
+  // },
+  // {
+  //   accessorKey: "total",
+  //   header: ({ column }) => <DataTableColumnHeader column={column} title="Total" className="justify-end" />,
+  //   cell: ({ row }) => (
+  //     <div className="text-right">
+  //       ${row.original.total.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+  //     </div>
+  //   ),
+  //   size: 120,
+  // },
   {
     accessorKey: "saldo_pendiente",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Saldo Pendiente" className="justify-end" />,

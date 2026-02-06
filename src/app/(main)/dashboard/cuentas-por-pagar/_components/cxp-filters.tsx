@@ -36,7 +36,7 @@ const MONTHS = [
     { value: "12", label: "Diciembre" },
 ];
 
-export function DateFilter() {
+export function CxpFilters() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -192,7 +192,7 @@ export function DateFilter() {
                     <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                             mode="range"
-                            selected={dateRange}
+                            selected={dateRange.from && dateRange.to ? { from: dateRange.from, to: dateRange.to } : undefined}
                             onSelect={handleDateRangeSelect}
                             numberOfMonths={2}
                             locale={es}

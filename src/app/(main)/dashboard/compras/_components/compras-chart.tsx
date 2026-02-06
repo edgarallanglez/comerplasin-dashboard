@@ -5,28 +5,25 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import type { Sale } from "@/lib/api/bridge";
+import type { Compra } from "@/lib/api/bridge";
 
 const chartConfig = {
-    sales: {
-        label: "Ventas",
+    compras: {
+        label: "Compras",
         color: "#a1a1aa",
     },
 } satisfies ChartConfig;
 
-interface SalesChartProps {
-    data: Sale[];
-    title?: string;
-    description?: string;
+interface ComprasChartProps {
+    data: Compra[];
 }
 
-export function SalesChart({ data, title = "Ventas", description = "Ventas diarias" }: SalesChartProps) {
-    // Aggregate data by date
+export function ComprasChart({ data }: ComprasChartProps) {
     const chartData = React.useMemo(() => {
         const agg: Record<string, number> = {};
-        data.forEach((sale) => {
-            const date = sale.fecha.split('T')[0];
-            agg[date] = (agg[date] || 0) + sale.total;
+        data.forEach((compra) => {
+            const date = compra.CFECHA.split('T')[0];
+            agg[date] = (agg[date] || 0) + compra.total;
         });
         return Object.entries(agg)
             .map(([date, total]) => ({ date, total }))
@@ -36,16 +33,16 @@ export function SalesChart({ data, title = "Ventas", description = "Ventas diari
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
+                <CardTitle>Compras</CardTitle>
+                <CardDescription>Compras diarias</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig} className="aspect-auto h-[300px] w-full">
                     <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                         <defs>
-                            <linearGradient id="fillSales" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="var(--color-sales)" stopOpacity={0.8} />
-                                <stop offset="95%" stopColor="var(--color-sales)" stopOpacity={0.1} />
+                            <linearGradient id="fillCompras" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="var(--color-compras)" stopOpacity={0.8} />
+                                <stop offset="95%" stopColor="var(--color-compras)" stopOpacity={0.1} />
                             </linearGradient>
                         </defs>
                         <CartesianGrid vertical={false} strokeDasharray="3 3" />
@@ -90,8 +87,8 @@ export function SalesChart({ data, title = "Ventas", description = "Ventas diari
                         <Area
                             dataKey="total"
                             type="monotone"
-                            fill="url(#fillSales)"
-                            stroke="var(--color-sales)"
+                            fill="url(#fillCompras)"
+                            stroke="var(--color-compras)"
                             stackId="a"
                         />
                     </AreaChart>

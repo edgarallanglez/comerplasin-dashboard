@@ -7,11 +7,10 @@ interface CobranzaStatsProps {
 }
 
 export function CobranzaStats({ data }: CobranzaStatsProps) {
-    const totalPendiente = data.reduce((acc, curr) => acc + curr.saldo_pendiente, 0);
-    const totalFacturado = data.reduce((acc, curr) => acc + curr.total, 0);
+    const totalPendiente = data.reduce((acc, curr) => acc + (curr.saldo_pendiente || 0), 0);
     const totalCuentas = data.length;
-    const uniqueClients = new Set(data.map(d => d.id_cliente)).size;
-    
+    const uniqueClients = new Set(data.map(d => d.cliente_name)).size;
+
     const today = new Date();
     const vencidas = data.filter(item => {
         const vencimiento = new Date(item.fecha_vencimiento);
@@ -32,8 +31,8 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total por Cobrar</CardTitle>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-destructive/10">
-                        <DollarSign className="h-5 w-5 text-destructive" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                        <DollarSign className="h-5 w-5 text-primary" />
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -81,7 +80,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                 <CardContent>
                     <div className="text-2xl font-bold">{totalCuentas}</div>
                     <p className="text-xs text-muted-foreground">
-                        Facturado: ${totalFacturado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        Documentos por cobrar
                     </p>
                 </CardContent>
             </Card>

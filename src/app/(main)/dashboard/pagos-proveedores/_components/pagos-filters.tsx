@@ -36,7 +36,7 @@ const MONTHS = [
     { value: "12", label: "Diciembre" },
 ];
 
-export function DateFilter() {
+export function PagosFilters() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
