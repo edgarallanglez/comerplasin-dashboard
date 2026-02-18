@@ -1,8 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import LogoDark from "@/app/logo-dark.svg";
+import LogoLight from "@/app/logo-light.svg";
 
-import { CircleHelp, ClipboardList, Command, Database, File, Search, Settings } from "lucide-react";
+import { CircleHelp, ClipboardList, Database, File, Search, Settings } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 
 import {
@@ -94,8 +97,16 @@ export function AppSidebar({ user: supabaseUser, ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link prefetch={false} href="/dashboard/sales">
-                <Command />
-                <span className="font-semibold text-base">{APP_CONFIG.name}</span>
+                <Image
+                  src={LogoDark}
+                  alt="Comerplasin Logo"
+                  className="block dark:hidden"
+                />
+                <Image
+                  src={LogoLight}
+                  alt="Comerplasin Logo"
+                  className="hidden dark:block"
+                />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

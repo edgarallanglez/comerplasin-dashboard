@@ -5,6 +5,7 @@ import { TopSuppliersChart } from "./_components/top-suppliers-chart";
 import { TopProductsChart } from "./_components/top-products-chart";
 import { ComprasTable } from "./_components/compras-table";
 import { ComprasFilters } from "./_components/compras-filters";
+import { ClientFilter } from "../sales/_components/client-filter";
 
 export const dynamic = 'force-dynamic';
 
@@ -26,41 +27,46 @@ export default async function ComprasPage({ searchParams }: PageProps) {
     let data: import("@/lib/api/bridge").Compra[] = [];
     let topSuppliers: any[] = [];
     let topProducts: any[] = [];
+    let proveedores: { id: number; nombre: string }[] = [];
 
     try {
         // Fetch raw data
-        data = await bridgeApi.getCompras({
-            year: startDate && endDate ? undefined : year,
-            month: startDate && endDate ? undefined : month,
-            startDate,
-            endDate,
-            proveedor,
-            producto
-        });
+        const [comprasData, topSuppliersData, topProductsData, proveedoresData] = await Promise.all([
+            bridgeApi.getCompras({
+                year: startDate && endDate ? undefined : year,
+                month: startDate && endDate ? undefined : month,
+                startDate,
+                endDate,
+                proveedor,
+                producto
+            }),
+            bridgeApi.getCompras({
+                year: startDate && endDate ? undefined : year,
+                month: startDate && endDate ? undefined : month,
+                startDate,
+                endDate,
+                proveedor,
+                producto,
+                top: 'suppliers',
+                limit: '10'
+            }),
+            bridgeApi.getCompras({
+                year: startDate && endDate ? undefined : year,
+                month: startDate && endDate ? undefined : month,
+                startDate,
+                endDate,
+                proveedor,
+                producto,
+                top: 'products',
+                limit: '10'
+            }),
+            bridgeApi.getClientes(undefined, 2) // 2 = Proveedores (Providers)
+        ]);
 
-        // Fetch top suppliers
-        topSuppliers = await bridgeApi.getCompras({
-            year: startDate && endDate ? undefined : year,
-            month: startDate && endDate ? undefined : month,
-            startDate,
-            endDate,
-            proveedor,
-            producto,
-            top: 'suppliers',
-            limit: '10'
-        });
-
-        // Fetch top products
-        topProducts = await bridgeApi.getCompras({
-            year: startDate && endDate ? undefined : year,
-            month: startDate && endDate ? undefined : month,
-            startDate,
-            endDate,
-            proveedor,
-            producto,
-            top: 'products',
-            limit: '10'
-        });
+        data = comprasData;
+        topSuppliers = topSuppliersData;
+        topProducts = topProductsData;
+        proveedores = proveedoresData;
     } catch (error) {
         console.error("Failed to fetch compras data", error);
     }
@@ -70,6 +76,7 @@ export default async function ComprasPage({ searchParams }: PageProps) {
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold tracking-tight">Compras</h1>
                 <div className="flex items-center gap-2">
+                    {/* <ClientFilter clients={proveedores} /> */}
                     <ComprasFilters />
                 </div>
             </div>

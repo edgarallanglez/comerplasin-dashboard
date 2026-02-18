@@ -50,6 +50,9 @@ export interface Inventario {
     almacen: string;
     existencia: number;
     fecha_extraccion: string;
+    min_stock?: number;
+    max_stock?: number;
+    ultimo_costo?: number;
 }
 
 export interface Compra {
@@ -104,14 +107,33 @@ export interface PagoProveedor {
     CTOTAL: number;
 }
 
+export interface Meta {
+    id_cliente: number;
+    cliente_name: string;
+    venta_anio_anterior: number;
+    venta_mes_anterior: number;
+    venta_anio_actual: number;
+    venta_mes_actual: number;
+}
+
 
 export const bridgeApi = {
-    getSales: async (params?: { startDate?: string; endDate?: string; year?: string; month?: string }) => {
+    getSales: async (params?: { startDate?: string; endDate?: string; year?: string; month?: string; cliente?: string }) => {
         try {
             const response = await api.get<Sale[]>('/ventas', { params });
             return response.data;
         } catch (error) {
             console.error('Error fetching sales:', error);
+            throw error;
+        }
+    },
+
+    getClientes: async (q?: string, type: number = 1) => {
+        try {
+            const response = await api.get<{ id: number; nombre: string }[]>('/clientes', { params: { q, type } });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching clientes:', error);
             throw error;
         }
     },
@@ -124,7 +146,7 @@ export const bridgeApi = {
         return bridgeApi.getSales({ year, month });
     },
 
-    getCobranza: async (params?: { startDate?: string; endDate?: string; year?: string; month?: string }) => {
+    getCobranza: async (params?: { startDate?: string; endDate?: string; year?: string; month?: string; cliente?: string }) => {
         try {
             const response = await api.get<Cobranza[]>('/cobranza', { params });
             return response.data;
@@ -211,6 +233,16 @@ export const bridgeApi = {
             return response.data;
         } catch (error) {
             console.error('Error fetching pagos proveedores:', error);
+            throw error;
+        }
+    },
+
+    getMetas: async (year?: string, month?: string) => {
+        try {
+            const response = await api.get<Meta[]>('/metas', { params: { year, month } });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching metas:', error);
             throw error;
         }
     },

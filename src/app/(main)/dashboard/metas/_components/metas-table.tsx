@@ -1,0 +1,52 @@
+"use client";
+
+import { DataTable } from "@/components/data-table/data-table";
+import { DataTablePagination } from "@/components/data-table/data-table-pagination";
+import { useDataTableInstance } from "@/hooks/use-data-table-instance";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { getMetasColumns } from "./metas-columns";
+import { Meta } from "@/lib/api/bridge";
+import { useMemo } from "react";
+
+interface MetasTableProps {
+    data: Meta[];
+    year: number;
+    month: number;
+}
+
+export function MetasTable({ data, year, month }: MetasTableProps) {
+    const columns = useMemo(() => getMetasColumns(year, month), [year, month]);
+
+    const table = useDataTableInstance({
+        data,
+        columns,
+        enableRowSelection: false,
+        getRowId: (row) => row.id_cliente.toString(),
+        defaultPageSize: 20,
+    });
+
+    return (
+        <div className="space-y-4 h-full flex flex-col min-w-0">
+            <div className="flex items-center justify-between gap-4">
+                <div className="relative w-full sm:max-w-sm">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Filtrar por cliente..."
+                        value={(table.getColumn("cliente_name")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("cliente_name")?.setFilterValue(event.target.value)
+                        }
+                        className="pl-8 w-full sm:w-[300px]"
+                    />
+                </div>
+            </div>
+            <div className="rounded-md border flex-1 overflow-hidden flex flex-col min-w-0">
+                <div className="overflow-auto flex-1">
+                    <DataTable table={table} columns={columns} />
+                </div>
+            </div>
+            <DataTablePagination table={table} noSelection />
+        </div>
+    );
+}

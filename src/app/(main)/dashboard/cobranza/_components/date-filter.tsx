@@ -36,7 +36,7 @@ const MONTHS = [
     { value: "12", label: "Diciembre" },
 ];
 
-export function DateFilter() {
+export function DateFilter({ hideDays }: { hideDays?: boolean }) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -49,7 +49,7 @@ export function DateFilter() {
     const endDateParam = searchParams.get("endDate");
 
     const [filterMode, setFilterMode] = React.useState<"preset" | "custom">(
-        startDateParam && endDateParam ? "custom" : "preset"
+        (startDateParam && endDateParam && !hideDays) ? "custom" : "preset"
     );
     const [selectedYear, setSelectedYear] = React.useState<string>(
         yearParam || currentYear.toString()
@@ -123,15 +123,17 @@ export function DateFilter() {
 
     return (
         <div className="flex items-center gap-2 flex-wrap">
-            <Select value={filterMode} onValueChange={(v) => handleModeChange(v as "preset" | "custom")}>
-                <SelectTrigger className="w-[140px]">
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="preset">Año/Mes</SelectItem>
-                    <SelectItem value="custom">Rango Custom</SelectItem>
-                </SelectContent>
-            </Select>
+            {!hideDays && (
+                <Select value={filterMode} onValueChange={(v) => handleModeChange(v as "preset" | "custom")}>
+                    <SelectTrigger className="w-[140px]">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="preset">Año/Mes</SelectItem>
+                        <SelectItem value="custom">Rango Custom</SelectItem>
+                    </SelectContent>
+                </Select>
+            )}
 
             {filterMode === "preset" ? (
                 <>

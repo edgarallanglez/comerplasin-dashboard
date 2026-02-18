@@ -19,6 +19,7 @@ import {
   SquareArrowUpRight,
   Users,
   Wallet,
+  Target,
 } from "lucide-react";
 
 export interface NavSubItem {
@@ -49,7 +50,7 @@ export interface NavGroup {
 export const sidebarItems: NavGroup[] = [
   {
     id: 1,
-    label: "Dashboards",
+    label: "Módulos",
     items: [
       // {
       //   title: "Default",
@@ -69,6 +70,11 @@ export const sidebarItems: NavGroup[] = [
         isNew: true,
       },
       {
+        title: "Metas",
+        url: "/dashboard/metas",
+        icon: Target,
+      },
+      {
         title: "Inventario",
         url: "/dashboard/inventario",
         icon: Package,
@@ -80,12 +86,12 @@ export const sidebarItems: NavGroup[] = [
         icon: ShoppingBag,
         isNew: true,
       },
-      {
-        title: "Cuentas por Pagar",
-        url: "/dashboard/cuentas-por-pagar",
-        icon: ReceiptText,
-        isNew: true,
-      },
+      // {
+      //   title: "Cuentas por Pagar",
+      //   url: "/dashboard/cuentas-por-pagar",
+      //   icon: ReceiptText,
+      //   isNew: true,
+      // },
       {
         title: "Pagos a Proveedores",
         url: "/dashboard/pagos-proveedores",

@@ -16,7 +16,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
 
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-            <Card>
+            {/* <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Compras (con IVA)</CardTitle>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -43,7 +43,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                         {data.length > 0 ? "Para el periodo seleccionado" : "No hay datos"}
                     </p>
                 </CardContent>
-            </Card>
+            </Card> */}
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Órdenes</CardTitle>

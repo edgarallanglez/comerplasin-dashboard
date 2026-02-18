@@ -20,13 +20,13 @@ interface SalesChartProps {
     description?: string;
 }
 
-export function SalesChart({ data, title = "Ventas", description = "Ventas diarias" }: SalesChartProps) {
+export function SalesChart({ data, title = "Ventas", description = "Ventas diarias (sin IVA)" }: SalesChartProps) {
     // Aggregate data by date
     const chartData = React.useMemo(() => {
         const agg: Record<string, number> = {};
         data.forEach((sale) => {
             const date = sale.fecha.split('T')[0];
-            agg[date] = (agg[date] || 0) + sale.total;
+            agg[date] = (agg[date] || 0) + sale.subtotal;
         });
         return Object.entries(agg)
             .map(([date, total]) => ({ date, total }))
