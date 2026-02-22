@@ -114,6 +114,7 @@ export interface Meta {
     venta_mes_anterior: number;
     venta_anio_actual: number;
     venta_mes_actual: number;
+    venta_mes_anterior_actual: number;
 }
 
 

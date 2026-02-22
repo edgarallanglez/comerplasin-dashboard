@@ -26,7 +26,7 @@ export default async function MetasPage({ searchParams }: PageProps) {
     }
 
     return (
-        <div className="flex flex-col gap-4 md:gap-6 p-6 h-[calc(100vh-4rem)]">
+        <div className="flex flex-col gap-4 md:gap-6 p-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold tracking-tight">Metas de Venta</h1>
                 <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ export default async function MetasPage({ searchParams }: PageProps) {
                 </div>
             </div>
 
-            <div className="flex-1 min-h-0">
+            <div className="min-w-0">
                 <MetasTable data={data} year={parseInt(year)} month={parseInt(month)} />
             </div>
         </div>

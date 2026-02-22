@@ -27,7 +27,7 @@ export function MetasTable({ data, year, month }: MetasTableProps) {
     });
 
     return (
-        <div className="space-y-4 h-full flex flex-col min-w-0">
+        <div className="space-y-4 min-w-0">
             <div className="flex items-center justify-between gap-4">
                 <div className="relative w-full sm:max-w-sm">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -41,10 +41,8 @@ export function MetasTable({ data, year, month }: MetasTableProps) {
                     />
                 </div>
             </div>
-            <div className="rounded-md border flex-1 overflow-hidden flex flex-col min-w-0">
-                <div className="overflow-auto flex-1">
-                    <DataTable table={table} columns={columns} />
-                </div>
+            <div className="rounded-md border overflow-x-auto max-w-full">
+                <DataTable table={table} columns={columns} />
             </div>
             <DataTablePagination table={table} noSelection />
         </div>
