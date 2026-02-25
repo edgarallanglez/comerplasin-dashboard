@@ -48,11 +48,26 @@ export default async function InventarioPage({ searchParams }: PageProps) {
         almacen
     })).sort((a, b) => a.almacen.localeCompare(b.almacen));
 
+    let productLabel = "Todos los productos";
+    if (producto) {
+        productLabel = `Producto ${producto}`;
+    }
+
+    let warehouseLabel = "Todos los almacenes";
+    if (almacen) {
+        const found = warehouses.find(w => w.id_almacen.toString() === almacen);
+        if (found) {
+            warehouseLabel = found.almacen;
+        }
+    }
+
+    let stockLabel = conStock ? "En existencia (>0)" : "Todo el inventario";
+
     return (
-        <div className="flex flex-col gap-4 md:gap-6 p-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Inventario</h1>
-                <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Inventario</h1>
+                <div className="flex items-center gap-2 flex-wrap">
                     <InventarioFilters warehouses={warehouses} />
                 </div>
             </div>
@@ -60,7 +75,12 @@ export default async function InventarioPage({ searchParams }: PageProps) {
             <InventarioStats data={data} />
 
             <div className="grid gap-4 min-w-0">
-                <h2 className="text-xl font-semibold">Productos en inventario</h2>
+                <h2 className="text-xl font-semibold flex items-center gap-2 flex-wrap">
+                    Productos en inventario
+                    <span className="text-sm font-normal text-muted-foreground bg-muted px-2 py-1 rounded-md">
+                        {warehouseLabel} • {productLabel} • {stockLabel}
+                    </span>
+                </h2>
                 <InventarioTable data={data} />
             </div>
         </div>

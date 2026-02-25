@@ -14,11 +14,11 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({ table, noSelection }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between px-4">
+    <div className="flex flex-col gap-2 px-2 sm:px-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="hidden flex-1 text-muted-foreground text-sm lg:flex">
         {!noSelection && `${table.getFilteredSelectedRowModel().rows.length} de ${table.getFilteredRowModel().rows.length} filas seleccionadas.`}
       </div>
-      <div className="flex w-full items-center gap-8 lg:w-fit">
+      <div className="flex w-full items-center justify-between gap-4 sm:gap-8 lg:w-fit">
         <div className="hidden items-center gap-2 lg:flex">
           <Label htmlFor="rows-per-page" className="font-medium text-sm">
             Filas por página
@@ -41,10 +41,10 @@ export function DataTablePagination<TData>({ table, noSelection }: DataTablePagi
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-fit items-center justify-center font-medium text-sm">
+        <div className="flex w-fit items-center justify-center font-medium text-xs sm:text-sm whitespace-nowrap">
           Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
         </div>
-        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2 lg:ml-0">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"

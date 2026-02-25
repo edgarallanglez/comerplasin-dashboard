@@ -29,16 +29,29 @@ export function MetasTable({ data, year, month }: MetasTableProps) {
     return (
         <div className="space-y-4 min-w-0">
             <div className="flex items-center justify-between gap-4">
-                <div className="relative w-full sm:max-w-sm">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Filtrar por cliente..."
-                        value={(table.getColumn("cliente_name")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("cliente_name")?.setFilterValue(event.target.value)
-                        }
-                        className="pl-8 w-full sm:w-[300px]"
-                    />
+                <div className="flex items-center gap-4 w-full">
+                    <div className="relative w-full md:max-w-sm">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            placeholder="Filtrar por cliente..."
+                            value={(table.getColumn("cliente_name")?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                table.getColumn("cliente_name")?.setFilterValue(event.target.value)
+                            }
+                            className="pl-8 w-full"
+                        />
+                    </div>
+                    <div className="relative w-full md:max-w-sm">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            placeholder="Filtrar por agente..."
+                            value={(table.getColumn("agente")?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                table.getColumn("agente")?.setFilterValue(event.target.value)
+                            }
+                            className="pl-8 w-full"
+                        />
+                    </div>
                 </div>
             </div>
             <div className="rounded-md border overflow-x-auto max-w-full">

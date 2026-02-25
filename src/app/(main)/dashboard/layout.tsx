@@ -15,6 +15,7 @@ import { AccountSwitcher } from "./_components/sidebar/account-switcher";
 import { LayoutControls } from "./_components/sidebar/layout-controls";
 import { SearchDialog } from "./_components/sidebar/search-dialog";
 import { ThemeSwitcher } from "./_components/sidebar/theme-switcher";
+import { RouteGuard } from "./_components/route-guard";
 
 export default async function Layout({ children }: Readonly<{ children: ReactNode }>) {
   const cookieStore = await cookies();
@@ -29,6 +30,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
+      <RouteGuard userEmail={user?.email} />
       <AppSidebar variant={variant} collapsible={collapsible} user={user} />
       <SidebarInset
         className={cn(
@@ -58,7 +60,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
             </div>
           </div>
         </header>
-        <div className="h-full p-4 md:p-6 overflow-x-hidden">{children}</div>
+        <div className="h-full p-2 sm:p-4 md:p-6 overflow-x-hidden">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

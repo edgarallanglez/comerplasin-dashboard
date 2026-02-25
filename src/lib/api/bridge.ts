@@ -110,6 +110,7 @@ export interface PagoProveedor {
 export interface Meta {
     id_cliente: number;
     cliente_name: string;
+    agente: string | null;
     venta_anio_anterior: number;
     venta_mes_anterior: number;
     venta_anio_actual: number;

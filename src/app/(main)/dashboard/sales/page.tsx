@@ -44,11 +44,35 @@ export default async function SalesPage({ searchParams }: PageProps) {
         console.error("Failed to fetch data", error);
     }
 
+    let dateLabel = "";
+    if (startDate && endDate) {
+        const formatStr = (ds: string) => {
+            const parts = ds.split('-');
+            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            return ds;
+        };
+        dateLabel = `Del ${formatStr(startDate)} al ${formatStr(endDate)}`;
+    } else if (month && year) {
+        const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+        const monthName = date.toLocaleString('es-MX', { month: 'long' });
+        dateLabel = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
+    } else {
+        dateLabel = `Todo el año ${year}`;
+    }
+
+    let clientLabel = "Todos los clientes";
+    if (cliente && clients.length > 0) {
+        const found = clients.find(c => c.id.toString() === cliente);
+        if (found) {
+            clientLabel = found.nombre;
+        }
+    }
+
     return (
-        <div className="flex flex-col gap-4 md:gap-6 p-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Ventas</h1>
-                <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Ventas</h1>
+                <div className="flex items-center gap-2 flex-wrap">
                     <ClientFilter clients={clients} />
                     <DateFilter />
                 </div>
@@ -58,7 +82,12 @@ export default async function SalesPage({ searchParams }: PageProps) {
             <SalesChart data={data} />
 
             <div className="grid gap-4 min-w-0">
-                <h2 className="text-xl font-semibold">Transacciones Recientes</h2>
+                <h2 className="text-xl font-semibold flex items-center gap-2 flex-wrap">
+                    Transacciones Recientes
+                    <span className="text-sm font-normal text-muted-foreground bg-muted px-2 py-1 rounded-md">
+                        {dateLabel} • {clientLabel}
+                    </span>
+                </h2>
                 <SalesTable data={data} />
             </div>
         </div>

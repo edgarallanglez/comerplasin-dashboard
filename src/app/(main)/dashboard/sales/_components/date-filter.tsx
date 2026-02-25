@@ -140,7 +140,7 @@ export function DateFilter() {
                             <SelectValue placeholder="Año" />
                         </SelectTrigger>
                         <SelectContent>
-                            {[currentYear, currentYear - 1, currentYear - 2, 2023].filter((y, i, arr) => arr.indexOf(y) === i).map((y) => (
+                            {Array.from({ length: currentYear - 2019 + 1 }, (_, i) => currentYear - i).map((y) => (
                                 <SelectItem key={y} value={y.toString()}>
                                     {y}
                                 </SelectItem>
@@ -197,9 +197,9 @@ export function DateFilter() {
                             numberOfMonths={2}
                             locale={es}
                             captionLayout="dropdown"
-                            fromYear={2023}
+                            fromYear={2019}
                             toYear={new Date().getFullYear()}
-                            disabled={(date) => date > new Date() || date < new Date("2023-01-01")}
+                            disabled={(date) => date > new Date() || date < new Date("2019-01-01")}
                         />
                     </PopoverContent>
                 </Popover>

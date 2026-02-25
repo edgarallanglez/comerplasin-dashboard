@@ -38,7 +38,7 @@ export function CobranzaTable({ data }: CobranzaTableProps) {
 
   return (
     <div className="space-y-4 min-w-0">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div className="relative w-full sm:max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input

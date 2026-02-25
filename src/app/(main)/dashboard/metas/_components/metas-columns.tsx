@@ -19,6 +19,13 @@ export const getMetasColumns = (year: number, month: number): ColumnDef<Meta>[] 
 
     return [
         {
+            accessorKey: "agente",
+            header: ({ column }) => <DataTableColumnHeader column={column} title="Agente" />,
+            cell: ({ row }) => <TruncatedCell value={row.original.agente || "-"} maxWidth="200px" />,
+            size: 200,
+            filterFn: "includesString",
+        },
+        {
             accessorKey: "cliente_name",
             header: ({ column }) => <DataTableColumnHeader column={column} title="Cliente" />,
             cell: ({ row }) => <TruncatedCell value={row.original.cliente_name} maxWidth="300px" />,

@@ -18,7 +18,7 @@ export function CxpStats({ data }: CxpStatsProps) {
     const proveedoresVencidos = data.filter(d => d.saldo_vencido > 0).length;
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">CxP Neto</CardTitle>
@@ -27,7 +27,7 @@ export function CxpStats({ data }: CxpStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">
                         ${saldoTotal.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <p className="text-xs text-muted-foreground">
@@ -43,7 +43,7 @@ export function CxpStats({ data }: CxpStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold text-destructive">
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-destructive">
                         ${totalVencido.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <p className="text-xs text-muted-foreground">
@@ -59,7 +59,7 @@ export function CxpStats({ data }: CxpStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold text-green-600">
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">
                         ${totalPagos.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <p className="text-xs text-muted-foreground">
@@ -75,7 +75,7 @@ export function CxpStats({ data }: CxpStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{totalDocs}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{totalDocs}</div>
                     <p className="text-xs text-muted-foreground">
                         Pendientes
                     </p>
@@ -89,7 +89,7 @@ export function CxpStats({ data }: CxpStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{uniqueSuppliers}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{uniqueSuppliers}</div>
                     <p className="text-xs text-muted-foreground">
                         Con saldo pendiente
                     </p>

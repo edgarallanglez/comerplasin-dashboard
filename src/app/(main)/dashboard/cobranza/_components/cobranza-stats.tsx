@@ -12,22 +12,29 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
     const uniqueClients = new Set(data.map(d => d.cliente_name)).size;
 
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const vencidas = data.filter(item => {
-        const vencimiento = new Date(item.fecha_vencimiento);
-        return vencimiento < today;
+        if (!item.fecha_vencimiento) return false;
+        const vDate = new Date(item.fecha_vencimiento);
+        const vDateLocal = new Date(vDate.getUTCFullYear(), vDate.getUTCMonth(), vDate.getUTCDate());
+        return vDateLocal < today;
     });
     const totalVencido = vencidas.reduce((acc, curr) => acc + curr.saldo_pendiente, 0);
     const cuentasVencidas = vencidas.length;
 
     const porVencer = data.filter(item => {
-        const vencimiento = new Date(item.fecha_vencimiento);
-        const diffDays = Math.ceil((vencimiento.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        if (!item.fecha_vencimiento) return false;
+        const vDate = new Date(item.fecha_vencimiento);
+        const vDateLocal = new Date(vDate.getUTCFullYear(), vDate.getUTCMonth(), vDate.getUTCDate());
+        const diffDays = Math.ceil((vDateLocal.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        // Include today (0) up to 30 days
         return diffDays >= 0 && diffDays <= 30;
     });
     const totalPorVencer = porVencer.reduce((acc, curr) => acc + curr.saldo_pendiente, 0);
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total por Cobrar</CardTitle>
@@ -36,7 +43,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${totalPendiente.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${totalPendiente.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {data.length > 0 ? "Saldo pendiente total" : "No hay datos"}
                     </p>
@@ -50,7 +57,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold text-destructive">${totalVencido.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-destructive">${totalVencido.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {cuentasVencidas} cuenta{cuentasVencidas !== 1 ? 's' : ''} vencida{cuentasVencidas !== 1 ? 's' : ''}
                     </p>
@@ -64,7 +71,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-500">${totalPorVencer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-600 dark:text-yellow-500">${totalPorVencer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {porVencer.length} cuenta{porVencer.length !== 1 ? 's' : ''}
                     </p>
@@ -78,7 +85,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{totalCuentas}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{totalCuentas}</div>
                     <p className="text-xs text-muted-foreground">
                         Documentos por cobrar
                     </p>
@@ -92,7 +99,7 @@ export function CobranzaStats({ data }: CobranzaStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{uniqueClients}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{uniqueClients}</div>
                     <p className="text-xs text-muted-foreground">
                         Con saldo pendiente
                     </p>

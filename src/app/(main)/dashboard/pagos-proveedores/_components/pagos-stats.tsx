@@ -13,7 +13,7 @@ export function PagosStats({ data }: PagosStatsProps) {
     const promedioPago = numPagos > 0 ? totalPagado / numPagos : 0;
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Pagado</CardTitle>
@@ -22,7 +22,7 @@ export function PagosStats({ data }: PagosStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${totalPagado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${totalPagado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {data.length > 0 ? "Para el periodo seleccionado" : "No hay datos"}
                     </p>
@@ -36,7 +36,7 @@ export function PagosStats({ data }: PagosStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{numPagos}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{numPagos}</div>
                 </CardContent>
             </Card>
             <Card>
@@ -47,7 +47,7 @@ export function PagosStats({ data }: PagosStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{uniqueSuppliers}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{uniqueSuppliers}</div>
                 </CardContent>
             </Card>
             <Card>
@@ -58,7 +58,7 @@ export function PagosStats({ data }: PagosStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${promedioPago.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${promedioPago.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                 </CardContent>
             </Card>
         </div>

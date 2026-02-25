@@ -103,7 +103,7 @@ export function DataTable<TData, TValue>({
   }
 
   const tableContent = (
-    <Table>
+    <Table className="min-w-[600px]">
       <TableHeader className="sticky top-0 z-10 bg-muted">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

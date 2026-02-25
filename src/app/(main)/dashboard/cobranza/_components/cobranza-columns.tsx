@@ -32,32 +32,13 @@ export const cobranzaColumns: ColumnDef<Cobranza>[] = [
     accessorKey: "fecha_vencimiento",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Vencimiento" />,
     cell: ({ row }) => {
-      const vencimiento = new Date(row.original.fecha_vencimiento);
-      // Normalize to midnight to compare dates only
-      vencimiento.setHours(0, 0, 0, 0);
-      // Adjust for timezone offset if needed, or better, use UTC components if source is UTC
-      // Assuming naive comparison is enough if we correct 'today'
+      const vDate = new Date(row.original.fecha_vencimiento);
+      const vDateLocal = new Date(vDate.getUTCFullYear(), vDate.getUTCMonth(), vDate.getUTCDate());
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      // Add timezone offset to vencimiento to treat it as local date if it was parsed as UTC
-      // simpler: just compare ISO date strings yyyy-mm-dd
-      const vencimientoStr = new Date(row.original.fecha_vencimiento).toISOString().split('T')[0];
-      const todayStr = new Date().toISOString().split('T')[0];
-
-      // Re-parsing to ensure local midnight consistency isn't strictly necessary if strict string comparison works?
-      // But for < operator, we need values.
-
-      // Better approach:
-      // Construct local dates from the parts
-      const vDate = new Date(row.original.fecha_vencimiento);
-      const vDateLocal = new Date(vDate.getUTCFullYear(), vDate.getUTCMonth(), vDate.getUTCDate());
-
-      const tDate = new Date();
-      const tDateLocal = new Date(tDate.getFullYear(), tDate.getMonth(), tDate.getDate());
-
-      const isOverdue = vDateLocal <= tDateLocal;
+      const isOverdue = vDateLocal < today;
 
       return (
         <div className={`w-28 ${isOverdue ? "text-destructive font-medium" : ""}`}>

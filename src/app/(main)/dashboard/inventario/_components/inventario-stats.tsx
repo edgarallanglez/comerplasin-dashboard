@@ -14,7 +14,7 @@ export function InventarioStats({ data }: InventarioStatsProps) {
     const uniqueWarehouses = new Set(data.map(d => d.id_almacen)).size;
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Productos</CardTitle>
@@ -23,7 +23,7 @@ export function InventarioStats({ data }: InventarioStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{totalProducts.toLocaleString()}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{totalProducts.toLocaleString()}</div>
                     <p className="text-xs text-muted-foreground">
                         {data.length > 0 ? "Productos en inventario" : "No hay datos"}
                     </p>
@@ -37,7 +37,7 @@ export function InventarioStats({ data }: InventarioStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{totalStock.toLocaleString("es-MX", { minimumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{totalStock.toLocaleString("es-MX", { minimumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         Unidades en stock
                     </p>
@@ -51,7 +51,7 @@ export function InventarioStats({ data }: InventarioStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{lowStockProducts}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{lowStockProducts}</div>
                     <p className="text-xs text-muted-foreground">
                         Productos con menos de 10 unidades
                     </p>
@@ -65,7 +65,7 @@ export function InventarioStats({ data }: InventarioStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{outOfStock}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{outOfStock}</div>
                     <p className="text-xs text-muted-foreground">
                         Productos agotados
                     </p>

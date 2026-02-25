@@ -170,9 +170,9 @@ export function InventarioFilters({ warehouses }: InventarioFiltersProps) {
                         numberOfMonths={2}
                         locale={es}
                         captionLayout="dropdown"
-                        fromYear={2023}
+                        fromYear={2019}
                         toYear={new Date().getFullYear()}
-                        disabled={(date) => date > new Date() || date < new Date("2023-01-01")}
+                        disabled={(date) => date > new Date() || date < new Date("2019-01-01")}
                     />
                     {dateRange.from && dateRange.to && (
                         <div className="p-3 border-t">

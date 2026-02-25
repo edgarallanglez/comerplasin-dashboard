@@ -24,6 +24,7 @@ import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
+import { isModuleAllowed } from "@/lib/rbac";
 
 const _data = {
   navSecondary: [
@@ -90,6 +91,13 @@ export function AppSidebar({ user: supabaseUser, ...props }: AppSidebarProps) {
     avatar: supabaseUser.user_metadata?.avatar_url || "",
   } : rootUser;
 
+  const allowedNavGroups = sidebarItems.map(group => {
+    return {
+      ...group,
+      items: group.items.filter(item => isModuleAllowed(userData.email, item.url))
+    };
+  }).filter(group => group.items.length > 0);
+
   return (
     <Sidebar {...props} variant={variant} collapsible={collapsible}>
       <SidebarHeader>
@@ -113,7 +121,7 @@ export function AppSidebar({ user: supabaseUser, ...props }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={sidebarItems} />
+        <NavMain items={allowedNavGroups} />
         {/* <NavDocuments items={data.documents} /> */}
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>

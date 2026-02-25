@@ -71,11 +71,40 @@ export default async function ComprasPage({ searchParams }: PageProps) {
         console.error("Failed to fetch compras data", error);
     }
 
+    let dateLabel = "";
+    if (startDate && endDate) {
+        const formatStr = (ds: string) => {
+            const parts = ds.split('-');
+            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            return ds;
+        };
+        dateLabel = `Del ${formatStr(startDate)} al ${formatStr(endDate)}`;
+    } else if (month && year) {
+        const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+        const monthName = date.toLocaleString('es-MX', { month: 'long' });
+        dateLabel = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
+    } else {
+        dateLabel = `Todo el año ${year}`;
+    }
+
+    let providerLabel = "Todos los proveedores";
+    if (proveedor && proveedores.length > 0) {
+        const found = proveedores.find(p => p.id.toString() === proveedor);
+        if (found) {
+            providerLabel = found.nombre;
+        }
+    }
+
+    let productLabel = "Todos los productos";
+    if (producto) {
+        productLabel = `Producto ${producto}`; // Using code since we don't have full product list
+    }
+
     return (
-        <div className="flex flex-col gap-4 md:gap-6 p-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Compras</h1>
-                <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Compras</h1>
+                <div className="flex items-center gap-2 flex-wrap">
                     {/* <ClientFilter clients={proveedores} /> */}
                     <ComprasFilters />
                 </div>
@@ -90,7 +119,12 @@ export default async function ComprasPage({ searchParams }: PageProps) {
             </div>
 
             <div className="grid gap-4 min-w-0">
-                <h2 className="text-xl font-semibold">Transacciones Recientes</h2>
+                <h2 className="text-xl font-semibold flex items-center gap-2 flex-wrap">
+                    Transacciones Recientes
+                    <span className="text-sm font-normal text-muted-foreground bg-muted px-2 py-1 rounded-md">
+                        {dateLabel} • {providerLabel} • {productLabel}
+                    </span>
+                </h2>
                 <ComprasTable data={data} />
             </div>
         </div>

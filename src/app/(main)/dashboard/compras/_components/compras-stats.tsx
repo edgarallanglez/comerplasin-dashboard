@@ -15,7 +15,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
     const averageOrderValue = totalOrders > 0 ? totalCompras / totalOrders : 0;
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
             {/* <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Compras (con IVA)</CardTitle>
@@ -24,7 +24,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${totalCompras.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${totalCompras.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {data.length > 0 ? "Para el periodo seleccionado" : "No hay datos"}
                     </p>
@@ -38,7 +38,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${totalSubtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${totalSubtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     <p className="text-xs text-muted-foreground">
                         {data.length > 0 ? "Para el periodo seleccionado" : "No hay datos"}
                     </p>
@@ -52,7 +52,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{totalOrders}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{totalOrders}</div>
                 </CardContent>
             </Card>
             <Card>
@@ -63,7 +63,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${averageOrderValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">${averageOrderValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                 </CardContent>
             </Card>
             <Card>
@@ -74,7 +74,7 @@ export function ComprasStats({ data, topSuppliers }: ComprasStatsProps) {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{uniqueSuppliers}</div>
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold">{uniqueSuppliers}</div>
                 </CardContent>
             </Card>
         </div>
